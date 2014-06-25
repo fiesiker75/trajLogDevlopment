@@ -40,7 +40,7 @@ temp=patientName.Data;
 
 validData=strcmp(temp{1,1}(:)','No Data');
 
-sprintf('validData = %d\n',validData);
+%sprintf('validData = %d\n',validData);
 
 
     if (~validData)
