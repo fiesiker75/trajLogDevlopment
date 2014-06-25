@@ -1,4 +1,4 @@
-function patientName = getPatientName(PIZ)
+function [lastName,firstName] = getPatientName(PIZ)
 %this function returns patientName from Mosaiq database
 % PIZ is used as primary key
 
@@ -33,14 +33,32 @@ if (validConnection==1)
 queryString=sprintf('SELECT LAST_NAME, FIRST_NAME FROM vw_Patient WHERE IDA=''%d''\n',PIZ); % this needs to be edited
 %fprintf(queryString);
 patientName=exec(patientNameQuery,queryString);
-
-else
-    patientName=fprintf('Invalid query: PIZ %d\n', PIZ);
-end
-
 patientName = fetch(patientName);
 
-patientName.Data
+temp=patientName.Data;
+% check whether valid PIZ
+
+validData=strcmp(temp{1,1}(:)','No Data');
+
+sprintf('validData = %d\n',validData);
+
+
+    if (~validData)
+
+    lastName=(temp{1,1}(:))';
+    firstName=(temp{1,2}(:))';
+    
+    else
+    lastName='Invalid';
+    firstName='Invalid';
+    fprintf('Invalid query string ''%s'' or PIZ %d. Please ensure that PIZ is correct!\n', queryString,PIZ);
+    end
+else
+    sprintf('No connection to DB ''%s''\n', db);
+    
+end
+
+
 
 close(patientNameQuery);
 

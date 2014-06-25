@@ -1,0 +1,3 @@
+%user='MOSAIQUser';
+
+%password='mosaiq'; % this needs to be edited
